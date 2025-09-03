@@ -14,32 +14,32 @@
     "secret": "sua-chave-secreta-aqui"
   },
   "model": {
-    "name": "Arthur Lopes",
-    "handle": "@arthur_lopes",
-    "bio": "sou bonito, sou gostoso jogo bola e danço, sou o cara mais legal do mundo"
+    "name": "Mithaly Ketlyn",
+    "handle": "@eu.mihalyc",
+    "bio": "Tenho 22 aninhos… com os peitos perfeitos pra tu apertar enquanto mete gostoso, e a BUNDA MAIS GOSTOSA que você vai ver! 🍑 Aqui é o meu cantinho mais íntimo… Você vai me ver: transando, me tocando, gemendo e gozando!🔥 De frente, de costas, de quatro… e com o dedinho passando onde você mais sonha🫦 Faço avaliações, personalizados e o que mais você quiser.🔞 Curiosidade mata, vem me ver abertinha pra você! ❤‍🔥"
   },
   "plans": {
     "monthly": {
       "buttonId": "btn-1-mes",
       "label": "1 mês",
-      "priceLabel": "R$ 19,98",
-      "price": 19.98,
+      "priceLabel": "R$ 24,90",
+      "price": 24.90,
       "description": "Assinatura mensal"
     },
     "quarterly": {
       "buttonId": "btn-3-meses",
-      "label": "3 meses",
-      "priceLabel": "R$ 59,76",
-      "price": 59.76,
+      "label": "3 meses (30% off)",
+      "priceLabel": "R$ 49,90",
+      "price": 49.90,
       "description": "Assinatura trimestral"
     },
     "semestrial": {
       "buttonId": "btn-6-meses",
-      "label": "6 meses",
-      "priceLabel": "R$ 119,43",
-      "price": 119.43,
+      "label": "6 meses (40% off)",
+      "priceLabel": "R$ 89,90",
+      "price": 89.90,
       "description": "Assinatura semestral"
     }
   },
-  "redirectUrl": "https://stellabeghini.com/compra-aprovada/"
+  "redirectUrl": "https://eu.mithalyvip.shop"
 }
