@@ -117,10 +117,11 @@ class PaymentModal {
 
     async show(transactionData) {
         if (!transactionData) {
-            console.error('Dados da transação são obrigatórios');
+            console.error('❌ Dados da transação são obrigatórios');
             return;
         }
 
+        console.log('💳 Dados da transação recebidos:', transactionData);
         this.currentTransaction = transactionData;
         this.updateModalContent(transactionData);
         
@@ -135,6 +136,7 @@ class PaymentModal {
         }
 
         // Iniciar verificação de status
+        console.log('🔄 Iniciando verificação de status...');
         this.startStatusCheck();
     }
 
@@ -350,58 +352,98 @@ class PaymentModal {
 
     startStatusCheck() {
         if (!this.currentTransaction) {
+            console.log('⚠️ Nenhuma transação atual para verificar status');
             return;
         }
 
         const transactionId = this.currentTransaction.id || this.currentTransaction.identifier || this.currentTransaction.payment_id;
+        console.log('🆔 ID da transação extraído:', transactionId);
+        console.log('💳 Transação atual:', this.currentTransaction);
+        
         if (!transactionId) {
+            console.log('⚠️ ID da transação não encontrado');
             return;
         }
 
         // Verificar status a cada 5 segundos
         this.statusCheckInterval = setInterval(async () => {
             try {
+                console.log('🔍 Verificando status da transação:', transactionId);
                 const status = await this.checkTransactionStatus(transactionId);
+                console.log('🔍 Status recebido:', status);
 
                 if (status) {
+                    console.log('🔍 Status da transação:', status.status);
                     if (status.status === 'paid' || status.status === 'completed') {
+                        console.log('✅ Pagamento confirmado! Iniciando redirecionamento...');
                         this.updateStatus('success', 'Pagamento confirmado! ✓');
                         this.stopStatusCheck();
 
                         // Fechar modal e redirecionar após 3 segundos
                         setTimeout(() => {
+                            console.log('🔄 Fechando modal e redirecionando...');
                             this.close();
                             this.showToast('Pagamento realizado com sucesso!', 'success');
-                            const redirectUrl = (window.APP_CONFIG && window.APP_CONFIG.redirectUrl) || 'https://www.youtube.com/watch?v=KWiSv44OYI0&list=RDKWiSv44OYI0&start_radio=1';
+                            
+                            // Determinar URL de redirecionamento baseada no plano de pagamento
+                            const redirectUrl = this.getRedirectUrlForPlan();
+                            console.log('🚀 Redirecionando para:', redirectUrl);
                             window.location.href = redirectUrl;
                         }, 3000);
 
                     } else if (status.status === 'expired' || status.status === 'cancelled') {
+                        console.log('❌ Pagamento expirado ou cancelado');
                         this.updateStatus('error', 'Pagamento expirado ou cancelado');
                         this.stopStatusCheck();
+                    } else {
+                        console.log('⏳ Status pendente:', status.status);
                     }
+                } else {
+                    console.log('⚠️ Nenhum status recebido');
                 }
             } catch (error) {
-                console.error('Erro ao verificar status:', error);
+                console.error('❌ Erro ao verificar status:', error);
             }
         }, 5000);
     }
 
+    getRedirectUrlForPlan() {
+        const path = window.location.pathname;
+        console.log('🔍 Path atual:', path);
+        console.log('🔍 URL completa:', window.location.href);
+        
+    
+
+      const redirectUrl = 'https://typebot.co/bot-mithalyof';
+        
+       
+        console.log('🔍 URL de redirecionamento:', redirectUrl);
+        
+        return redirectUrl;
+    }
+
     async checkTransactionStatus(transactionId) {
         if (!transactionId) {
+            console.log('⚠️ ID da transação não fornecido');
             return null;
         }
 
         try {
+            console.log('📡 Consultando status da transação:', transactionId);
             const response = await fetch(`/api/payments/${transactionId}/status`);
+            console.log('📡 Resposta da API:', response.status, response.statusText);
+            
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }
             const result = await response.json();
+            console.log('📡 Resultado da API:', result);
+            
             const data = result.data ? (result.data.data || result.data) : null;
+            console.log('📡 Dados extraídos:', data);
             return data;
         } catch (error) {
-            console.error('Erro ao consultar status da transação:', error);
+            console.error('❌ Erro ao consultar status da transação:', error);
             return null;
         }
     }
@@ -429,11 +471,8 @@ class PaymentModal {
 
         if (isNaN(value)) value = 0;
 
-        // Se o valor possui casas decimais, assume que já está em reais
-        // Caso contrário, trata como centavos
-        if (Number.isInteger(value)) {
-            value = value / 100;
-        }
+        // Os valores já estão em reais, não precisam ser divididos
+        // Removido a lógica de divisão por 100
 
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',

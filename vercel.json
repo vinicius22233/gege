@@ -9,6 +9,14 @@
     {
       "src": "public/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "redirect-privacy/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "funil_completo/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -17,13 +25,83 @@
       "dest": "/server.js"
     },
     {
+      "src": "/redirect-privacy/assets/(.*)",
+      "dest": "/redirect-privacy/assets/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/funil_completo/assets/$1"
+    },
+    {
+      "src": "/redirect-privacy",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/up1",
+      "dest": "/funil_completo/up1.html"
+    },
+    {
+      "src": "/up2",
+      "dest": "/funil_completo/up2.html"
+    },
+    {
+      "src": "/up3",
+      "dest": "/funil_completo/up3.html"
+    },
+    {
+      "src": "/back1",
+      "dest": "/funil_completo/back1.html"
+    },
+    {
+      "src": "/back2",
+      "dest": "/funil_completo/back2.html"
+    },
+    {
+      "src": "/back3",
+      "dest": "/funil_completo/back3.html"
+    },
+    {
+      "src": "/links",
+      "dest": "/links/index.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
+    },
+    {
+      "src": "/(.*)",
+      "status": 404,
+      "dest": "/links"
     }
   ],
   "env": {
     "NODE_ENV": "production",
+    "GATEWAY": "pushinpay",
+    "ENVIRONMENT": "production",
+    "GENERATE_QR_CODE_ON_MOBILE": "true",
     "SYNCPAY_CLIENT_ID": "708ddc0b-357d-4548-b158-615684caa616",
-    "SYNCPAY_CLIENT_SECRET": "c08d40e5-3049-48c9-85c0-fd3cc6ca502c"
+    "SYNCPAY_CLIENT_SECRET": "c08d40e5-3049-48c9-85c0-fd3cc6ca502c",
+    "PUSHINPAY_TOKEN": "45135|XFE5jjzsKTBY4PN1RXFIe7EISDX2DEHFukqMfii897180772",
+    "WEBHOOK_BASE_URL": "https://privacy-sync.vercel.app",
+    "WEBHOOK_SECRET": "",
+    "MODEL_NAME": "Mithaly ketlyn",
+    "MODEL_HANDLE": "eu.mihalyc",
+    "MODEL_BIO": "Tenho 22 aninhos… com os peitos perfeitos pra tu apertar enquanto mete gostoso, e a BUNDA MAIS GOSTOSA que você vai ver! 🍑 Aqui é o meu cantinho mais íntimo… Você vai me ver: transando, me tocando, gemendo e gozando!🔥 De frente, de costas, de quatro… e com o dedinho passando onde você mais sonha🫦 Faço avaliações, personalizados e o que mais você quiser.🔞 Curiosidade mata, vem me ver abertinha pra você! ❤‍🔥",
+    "PLAN_MONTHLY_BUTTON_ID": "btn-1-mes",
+    "PLAN_MONTHLY_LABEL": "1 mês",
+    "PLAN_MONTHLY_PRICE_LABEL": "R$ 24,99",
+    "PLAN_MONTHLY_PRICE": "24.99",
+    "PLAN_MONTHLY_DESCRIPTION": "Assinatura mensal",
+    "PLAN_QUARTERLY_BUTTON_ID": "btn-3-meses",
+    "PLAN_QUARTERLY_LABEL": "3 meses (30% off)",
+    "PLAN_QUARTERLY_PRICE_LABEL": "R$ 39,90",
+    "PLAN_QUARTERLY_PRICE": "39.90",
+    "PLAN_QUARTERLY_DESCRIPTION": "Assinatura trimestral",
+    "PLAN_SEMESTRIAL_BUTTON_ID": "btn-6-meses",
+    "PLAN_SEMESTRIAL_LABEL": "6 meses (40% off)",
+    "PLAN_SEMESTRIAL_PRICE_LABEL": "R$ 59,90",
+    "PLAN_SEMESTRIAL_PRICE": "59.90",
+    "PLAN_SEMESTRIAL_DESCRIPTION": "Assinatura semestral",
+    "REDIRECT_URL": "https://stellabeghini.com/oferta-premiada/"
   }
 }

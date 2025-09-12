@@ -796,11 +796,28 @@
             `;
             document.body.appendChild(loading);
         },
-        
+
+        hideLoading: function() {
+            if (typeof swal !== 'undefined' && typeof swal.close === 'function') {
+                try {
+                    swal.close();
+                } catch (error) {
+                    console.warn('Erro ao fechar SweetAlert:', error);
+                }
+            }
+
+            const existingLoading = document.getElementById('nativeLoading');
+            if (existingLoading) {
+                existingLoading.remove();
+            }
+        },
+
         showPixModal: function(data) {
             // Usar o modal de pagamento personalizado
             console.log('💳 PIX gerado:', data);
-            
+
+            this.hideLoading();
+
             try {
                 if (window.showPaymentModal && typeof window.showPaymentModal === 'function') {
                     // Usar o modal personalizado
@@ -809,14 +826,16 @@
                         pix_copy_paste: data.pix_code,
                         amount: data.amount || 0,
                         identifier: data.id,
-                        status: 'pending'
+                        status: 'pending',
+                        gateway: data.gateway || 'syncpay'
                     });
                 } else if (window.showPixPopup && typeof window.showPixPopup === 'function') {
                     // Usar popup alternativo
                     window.showPixPopup({
                         pix_code: data.pix_code,
                         amount: data.amount || 0,
-                        id: data.id
+                        id: data.id,
+                        gateway: data.gateway || 'syncpay'
                     });
                 } else {
                     // Fallback para alert simples
@@ -846,7 +865,9 @@
                 return {
                     id: result.identifier,
                     pix_code: result.pix_code,
-                    message: result.message
+                    message: result.message,
+                    amount: cashInData.amount, // Incluir o valor original
+                    gateway: 'syncpay'
                 };
             } catch (error) {
                 console.error('Erro ao criar transação PIX:', error);

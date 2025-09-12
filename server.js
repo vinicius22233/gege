@@ -660,6 +660,13 @@ app.get('/redirect', (req, res) => {
     res.sendFile(path.join(__dirname, 'redirect', 'index.html'));
 });
 
+// Rota para a página de redirecionamento privacy
+app.get('/redirect-privacy', (req, res) => {
+    res.sendFile(path.join(__dirname, 'redirect-privacy', 'index.html'));
+});
+
+// Rota para a página de back redirect
+
 // Rota de teste para verificar se a imagem está sendo servida
 app.get('/test-image', (req, res) => {
     const imagePath = path.join(__dirname, 'redirect', 'images', 'foto.jpg');
@@ -701,6 +708,67 @@ app.get('/privacy', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Alias para a página de checkout
+app.get('/checkout', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/oferta-premiada', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'oferta-premiada', 'index.html'));
+});
+
+// Rota para assinatura premiada
+app.get('/assinatura-premiada', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'assinatura-premiada.html'));
+});
+
+// Página de agradecimento
+app.get('/obrigado', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'obrigado.html'));
+});
+
+// ============================
+// ROTAS DO FUNIL COMPLETO
+// ============================
+
+// Rotas dos Upsells
+app.get('/up1', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'up1.html'));
+});
+
+app.get('/up2', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'up2.html'));
+});
+
+app.get('/up3', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'up3.html'));
+});
+
+// Rotas dos Downsells
+app.get('/back1', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'back1.html'));
+});
+
+app.get('/back1.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'back1.html'));
+});
+
+app.get('/back2', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'back2.html'));
+});
+
+app.get('/back2.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'back2.html'));
+});
+
+app.get('/back3', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'back3.html'));
+});
+
+app.get('/back3.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'funil_completo', 'back3.html'));
+});
+
 // Rota raiz redireciona para /links (página principal)
 app.get('/', (req, res) => {
     res.redirect('/links');
@@ -719,9 +787,17 @@ app.use((req, res, next) => {
 // Servir arquivos estáticos de cada diretório (APÓS o debug)
 app.use('/links', express.static(path.join(__dirname, 'links')));
 app.use('/compra-aprovada', express.static(path.join(__dirname, 'compra-aprovada')));
+app.use('/redirect-privacy', express.static(path.join(__dirname, 'redirect-privacy')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+// Servir arquivos estáticos do funil completo
+app.use('/funil_completo', express.static(path.join(__dirname, 'funil_completo')));
+
+// Permitir acesso direto aos assets do funil
+app.use('/assets', express.static(path.join(__dirname, 'funil_completo/assets')));
+
 // Middleware para servir arquivos estáticos de forma mais flexível
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/images', express.static(path.join(__dirname, 'links/images')));
 app.use('/icons', express.static(path.join(__dirname, 'links/icons')));
 app.use('/compra-aprovada/images', express.static(path.join(__dirname, 'compra-aprovada/images')));
@@ -760,24 +836,9 @@ app.use('*', (req, res) => {
         });
     }
     
-    // Para outras rotas, retornar página 404 HTML
-    res.status(404).send(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Página não encontrada</title>
-            <style>
-                body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-                .error { color: #e74c3c; font-size: 24px; }
-            </style>
-        </head>
-        <body>
-            <div class="error">404 - Página não encontrada</div>
-            <p>A página <strong>${req.path}</strong> não existe.</p>
-            <a href="/links">Voltar ao início</a>
-        </body>
-        </html>
-    `);
+    // Para outras rotas, redirecionar para /links (página principal)
+    console.log(`🔄 [404 Redirect] Redirecionando ${req.path} para /links`);
+    res.redirect(301, '/links');
 });
 
 // Middleware para tratamento de erros globais
@@ -818,8 +879,12 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Servidor rodando na porta ${PORT}`);
     console.log(`📱 Página Principal: http://localhost:${PORT}/links`);
     console.log(`💳 Checkout Privacy: http://localhost:${PORT}/privacy`);
-    console.log(`✅ Compra Aprovada: http://localhost:${PORT}/compra-aprovada`);
+    console.log(`🎁 Oferta Premiada: http://localhost:${PORT}/oferta-premiada`);
+    console.log(`🏆 Assinatura Premiada: http://localhost:${PORT}/assinatura-premiada`);
     console.log(`🔄 Redirecionamento: http://localhost:${PORT}/redirect`);
+    console.log(`\n🎯 FUNIL COMPLETO:`);
+    console.log(`   📈 Upsells: http://localhost:${PORT}/up1 | /up2 | /up3`);
+    console.log(`   📉 Downsells: http://localhost:${PORT}/back1 | /back2 | /back3`);
     console.log(`🌐 Acesse externamente: http://0.0.0.0:${PORT}/links`);
     
     // Mostrar informações do controller
