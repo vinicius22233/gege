@@ -414,7 +414,7 @@ class PaymentModal {
         
     
 
-      const redirectUrl = 'https://typebot.co/compra-privacyofc';
+      const redirectUrl = 'https://typebot.co/bot-privacygeo';
         
        
         console.log('🔍 URL de redirecionamento:', redirectUrl);
