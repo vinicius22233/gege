@@ -22,7 +22,7 @@ function getConfig() {
     
     model: {
       name: process.env.MODEL_NAME || 'Geovanna abreu',
-      handle: process.env.MODEL_HANDLE ? (process.env.MODEL_HANDLE.startsWith('@') ? process.env.MODEL_HANDLE : `@${process.env.MODEL_HANDLE}`) : '@eu.mihalyc',
+      handle: process.env.MODEL_HANDLE ? (process.env.MODEL_HANDLE.startsWith('@') ? process.env.MODEL_HANDLE : `@${process.env.MODEL_HANDLE}`) : '@geovannabreuofcc',
       bio: process.env.MODEL_BIO || 'Oii sou a Geovanna, 🥰 Amo fazer sexting, avaliações e vídeos customizados! Aqui vc encontra meus nudes, pézinhos, masturbação e muito mais! 🤭🤭 To online todo dia! Me deixa ser sua ninfetinha favorita? 😈💕'
     },
     
